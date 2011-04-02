@@ -1,0 +1,82 @@
+######################################################################
+# Flyer-Generator
+# ----------------------------------------
+# Web interface to generate PDF flyers
+######################################################################
+
+ABOUT
+----------------------------------------------------------------------
+
+Use story #1:
+ - Person is doing workshop, wants flyer
+ - selects event from calendar
+ - tweaks the tagline
+ - hits the big red button
+ - downloads awesome pdf
+
+Use story #2:
+ - wants to make an event not on the calendar
+ - fill out details
+ - hit the big red button
+ - download pdf
+
+TODO
+----------------------------------------------------------------------
+
+ - Choose a framework
+   - web.py, for no good reason
+ - Choose intermediate format(s)
+   - svg? 
+   - html?
+   - something else?
+   - requirements
+     - easy to work with
+     - debuggable - can take apart and look at what went wrong
+     - supported
+     - some sort of conversion path to PDF
+ - learn how to use the google calendar API
+   - it's what we're using for the club
+
+ - Future:
+   - how to easily add new styles
+   - how to open up the interface to multiple clubs
+   - track users/content
+     - show who made what at what time within org
+     - allow downloading old designed flyers (if lost)
+     - keep track of who's flyering where?
+     - allow drafts
+
+IDEAS
+----------------------------------------------------------------------
+
+basic idea: 
+      user ←→ web.py ←→ google / 2pdf
+
+frameworks:
+ - web.py?
+   - no documentation
+   - simple/lightweight
+ - rails?
+   - heavy
+ - django?
+   - heavy
+
+conversion:
+ - html2pdf?
+   - how quirky is the html renderer?
+ - imagemagick (svg)
+   - not so great, because output is raster
+   - ~5MB outputs for fairly complex sheets at a fair resolutions
+ - inkscape (svg2pdf)
+   - doesn't come standard on server boxes
+   - we'll have to run it on the ADI server, which isn't a bad thing
+ - batik (svg)
+   - java
+ - svglib (python)
+   - comes with an svg2pdf
+
+Linkfarm:
+http://stackoverflow.com/questions/1048205/how-to-programmatically-convert-svg-to-pdf-on-windows
+http://www.xhtml2pdf.com/
+http://pypi.python.org/pypi/svglib/
+http://code.google.com/apis/calendar/data/2.0/developers_guide_python.html
