@@ -36,6 +36,7 @@ TODO
      - some sort of conversion path to PDF
  - learn how to use the google calendar API
    - it's what we're using for the club
+ - actually code it up
 
  - Future:
    - how to easily add new styles
@@ -53,16 +54,19 @@ basic idea:
       user ←→ web.py ←→ google / 2pdf
 
 frameworks:
- - web.py?
+ - web.py
    - no documentation
    - simple/lightweight
- - rails?
+ - cherrypy?
+   - simple/lightweight
+   - not heavily trafficed
+ - rails
    - heavy
- - django?
+ - django
    - heavy
 
 conversion:
- - html2pdf?
+ - html2pdf
    - how quirky is the html renderer?
  - imagemagick (svg)
    - not so great, because output is raster
@@ -72,6 +76,8 @@ conversion:
    - we'll have to run it on the ADI server, which isn't a bad thing
  - batik (svg)
    - java
+   - looks like it just rasterizes?
+   - have to test
  - svglib (python)
    - comes with an svg2pdf
 
