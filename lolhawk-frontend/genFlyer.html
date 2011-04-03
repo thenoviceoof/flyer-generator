@@ -1,0 +1,192 @@
+<!doctype html>
+<html>
+<head>
+
+<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.8.6.custom.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="reset.css" />
+<link rel="stylesheet" type="text/css" href="css/ui-lightness/jquery-ui-1.8.6.custom.css" />
+
+<!--[if lt IE 9]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<style type="text/css">
+div#editor { display:none; }
+li * { vertical-align:middle; }
+label { display:inline-block; width:8em; vertical-align:middle; margin:0;padding:0; }
+input { width:20em; }
+textarea { display:inline-block; margin:0;padding:0; overflow:auto; }
+textarea#tagline { width:20em; height:3em; }
+textarea#description { width:20em; height:10em; }
+button { display:inline-block; }
+
+div#styleEditor { display:none; font-size:18px; }
+div#fontChooserContainer { display:none; height:20em;width:26em; }
+#styleEditor h3 { text-align:left; }
+
+body { width:7.5in; height:10in; font-size:12px; }
+
+#page { font-family:Arial, 'Droid Serif'; }
+
+h1, h2, h3, h4 {margin:0 auto; text-align:center;}
+h1 { font-size:1.75cm; margin:2cm auto; width:7in; }
+h2 { font-size:1cm; margin:0.5cm auto; width:7in; }
+h3 { font-size:0.8cm; margin:1cm auto; width:6in; }
+h4 { font-size:0.5cm; margin:1cm auto; width:6in; }
+</style>
+
+<script type="text/javascript">
+var fonts = [["Serif", ["Droid Serif", "Cousine", "OFL Sorts Mill Goudy TT", "Vollkorn", "Crimson Text", "Arvo"]],
+	["Sans Serif",["Droid Sans", "Nobile", "Molengo", "PT Sans", "Inconsolata", "Droid Sans Mono", "Josefin Slab"]],
+	["Other",["Tangerine", "Philosopher", "Lobster", "Reenie Beanie"]]];
+
+// loads Fonts dynamically
+// http://www.hunlock.com/blogs/Howto_Dynamically_Insert_Javascript_And_CSS
+function loadFont(fontName) {
+	var head = document.getElementsByTagName("head")[0];
+	var style = document.createElement("link");
+	style.type="text/css";
+	style.rel ="stylesheet";
+	style.href="http://fonts.googleapis.com/css?family="+fontName.replace(" ","+");
+	head.appendChild(style);
+}
+
+$(function() {
+	$("#editor").dialog({width: "auto", title: "Flyer Generator r004"});
+	$("#date").datepicker({ showButtonPanel:true, numberOfMonths: 2 });
+	// otherwise, only changes on blur/focus
+	$("input, textarea").keyup(function() { $(this).change() });
+	$("input, textarea").change(function() {
+			var data = $(this).val();
+			var d = data.replace(/\n/g,"<br/>");
+			$("#"+$(this).attr("id")+"_body").html(d);
+		});
+	var debug = false;
+	$("#debug").click(function(event) {
+			if(debug) {
+				$("body").css("border","");
+				debug = false;
+			} else {
+				$("body").css("border","1px black solid");
+				debug = true;
+			}
+		});
+	$("#format").change(function() {
+		$( "#date" ).datepicker( "option", "dateFormat", $(this).val() );
+	});
+	// set up way to reopen dialog in a non-intrusive way
+	$("body").dblclick(function() {
+			$("#editor").dialog("open");
+			return false;
+		});
+
+	// load fonts
+	for(var fam in fonts) {
+		for(var f in fonts[fam][1]) {
+			loadFont(fonts[fam][1][f]);
+		}
+	}
+	// add fonts to the font chooser
+	for(var fam in fonts) {
+		var family = fonts[fam][0];
+		for(var f in fonts[fam][1]) {
+			var font = fonts[fam][1][f];
+			var header = $("<h3></h3>").html(family+" - "+font);
+			header.css("font-family",font);
+			$("#fontChooser").append(header);
+			var example = $("<div></div>").html("abcdefghijklmnopqrstuvwxyz0123456789");
+			example.css("font-family",font);
+			$("#fontChooser").append(example);
+			header.data('font',font);
+			example.data('font',font);
+		}
+	}
+
+	$("#styleEditor").dialog({title:"Style Editor",autoOpen:false,model:true,width:'auto'});
+	$("#styler").click(function(){
+			$("#styleEditor").dialog("open");
+		});
+	$("#fontChooser").accordion({autoHeight:false});
+	$("#fontFamily").click(function(){
+			$("#fontChooserContainer").toggle();
+		});
+	$("#fontChooser > h3, #fontChooser > div").dblclick(function(){
+			$("#page").css("font-family",$(this).data('font'));
+			$("#fontChooserContainer").hide();
+			return false;
+		});
+});
+</script>
+
+</head>
+
+<body>
+
+<div id="page">
+<h1 id="tagline_body">Tagline</h1>
+
+<h3 id="description_body">Description</h3>
+
+<h2><span id="time_body">9PM</span> <span id="date_body">Today</span></h2>
+<h2 id="location_body">Location</h2>
+
+<h4 id="contact_body"></h4>
+
+<!--Fix this: need a good way to hot-swap footer/other branding-specific layout styles-->
+<div style="display:block;position:absolute;top:6.4in;width:7.5in;">
+<h4>Brought to you by the<br/>Application Development Initiative</h4>
+<img src="qrcode.png" style="height:6cm;float:left;" />
+<img src="adi_logo.png" style="height:4cm;float:right;margin-top:1cm;" />
+</div>
+
+</div>
+
+<div id="editor">
+<ul>
+<li><label for="tagline">Tagline:</label><textarea name="tagline" id="tagline">Tagline here</textarea>
+</li>
+<li><label for="description">Description:</label>
+<textarea name="description" id="description">Description</textarea></li>
+<li><label for="date">Date:</label><input type="text" name="date" id="date" /></li>
+<li>
+<label for="format">Date Format options:</label>
+	<select id="format" name="format">
+		<option value="mm/dd/yy">Default - mm/dd/yy</option>
+		<option value="d MM">Short - d M</option>
+		<option value="D d M">D d M</option>
+		<option value="DD, d MM">DD d M</option>
+		<option value="d M, yy">d M, yy</option>
+		<option value="d MM, yy">d MM, yy</option>
+		<option value="DD, d MM, yy">DD, d MM, yy</option>
+	</select>
+</li>
+<li>
+<label for="time">Time:</label><input type="text" name="time" id="time" value="9PM" />
+</li>
+<li><label for="location">Location:</label><input type="text" name="location" id="location" value="Location" /></li>
+<li><label for="contact">Contact:</label><input type="text" name="contact" id="contact" /></li>
+<li><button id="debug">debug</button></li>
+<li><button id="styler">Style Everything</button></li>
+</div>
+
+<div id="styleEditor">
+<ul>
+<li>
+<button id="fontFamily">Change Font Family</button>
+<div id="fontChooserContainer">
+<div id="fontChooser">
+</div>
+</div>
+</li>
+<li>
+<button id="fontSize">Change Font Size - WIP</button>
+</li>
+<li>
+<button id="width">Change Width - WIP</button>
+</li>
+</div>
+
+</body>
+</html>
