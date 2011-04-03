@@ -7,6 +7,8 @@
 ABOUT
 ----------------------------------------------------------------------
 
+It's a web-interface for creating flyers quickly and easily. 
+
 Use story #1:
  - Person is doing workshop, wants flyer
  - selects event from calendar
@@ -23,35 +25,28 @@ Use story #2:
 TODO
 ----------------------------------------------------------------------
 
- - Choose a framework
-   - web.py, for no good reason
- - Choose intermediate format(s)
-   - svg? 
-   - html?
-   - something else?
-   - requirements
-     - easy to work with
-     - debuggable - can take apart and look at what went wrong
-     - supported
-     - some sort of conversion path to PDF
+ - learn to use cherrypy
+ - either refit lolhawk interface, or make a new one
+   - DETAILS HERE
+ - convert2pdf! (easyyy)
  - learn how to use the google calendar API
    - it's what we're using for the club
  - actually code it up
 
  - Future:
-   - how to easily add new styles
-   - how to open up the interface to multiple clubs
    - track users/content
      - show who made what at what time within org
      - allow downloading old designed flyers (if lost)
      - keep track of who's flyering where?
      - allow drafts
+   - easily add new styles
+   - open up the interface to multiple clubs
 
 IDEAS
 ----------------------------------------------------------------------
 
 basic idea: 
-      user ←→ web.py ←→ google / 2pdf
+      user ←→ web framework ←→ google / 2pdf
 
 frameworks:
  - web.py
@@ -59,7 +54,9 @@ frameworks:
    - simple/lightweight
  - cherrypy?
    - simple/lightweight
-   - not heavily trafficed
+   - is an HTTP framework (not like PHP, has to run outside)
+   - not heavily trafficed, not such a big deal
+   - moses is the documentation
  - rails
    - heavy
  - django
@@ -117,4 +114,14 @@ TESTS
  - html2ps, ps2pdf
    - oh my god it's horrific
  - wkhtml2pdf
-   - 
+   - works like a charm
+   - static, might not need dependencies
+
+STUFF DECIDED ON 
+----------------------------------------------------------------------
+
+wkhtml2pdf - everyone knows html
+ - easy to work with (by many people)
+ - debuggable - can take apart and look at what went wrong
+ - supported
+cherrypy?
