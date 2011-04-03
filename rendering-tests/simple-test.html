@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+  <head>
+
+    <link rel="stylesheet" type="text/css" href="reset.css" />
+
+    <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <style type="text/css">
+      div#editor { display:none; }
+      li * { vertical-align:middle; }
+      label { display:inline-block; width:8em; vertical-align:middle; margin:0;padding:0; }
+      input { width:20em; }
+      textarea { display:inline-block; margin:0;padding:0; overflow:auto; }
+      textarea#tagline { width:20em; height:3em; }
+      textarea#description { width:20em; height:10em; }
+      button { display:inline-block; }
+
+      div#styleEditor { display:none; font-size:18px; }
+      div#fontChooserContainer { display:none; height:20em;width:26em; }
+      #styleEditor h3 { text-align:left; }
+
+      body { width:7.5in; height:10in; font-size:12px; }
+
+      #page { font-family:Arial, 'Droid Serif'; }
+
+      h1, h2, h3, h4 {margin:0 auto; text-align:center;}
+      h1 { font-size:1.75cm; margin:2cm auto; width:7in; }
+      h2 { font-size:1cm; margin:0.5cm auto; width:7in; }
+      h3 { font-size:0.8cm; margin:1cm auto; width:6in; }
+      h4 { font-size:0.5cm; margin:1cm auto; width:6in; }
+    </style>
+
+  </head>
+
+  <body>
+
+    <div id="page">
+      <h1 id="tagline_body">Tagline</h1>
+
+      <h3 id="description_body">Description</h3>
+
+      <h2><span id="time_body">9PM</span> <span id="date_body">Today</span></h2>
+      <h2 id="location_body">Location</h2>
+
+      <h4 id="contact_body"></h4>
+
+      <!--Fix this: need a good way to hot-swap footer/other branding-specific layout styles-->
+      <div style="display:block;position:absolute;top:6.4in;width:7.5in;">
+	<h4>Brought to you by the<br/>Application Development Initiative</h4>
+	<img src="qrcode.png" style="height:6cm;float:left;" />
+	<img src="adi_logo.png" style="height:4cm;float:right;margin-top:1cm;" />
+      </div>
+
+    </div>
+
+  </body>
+</html>
+

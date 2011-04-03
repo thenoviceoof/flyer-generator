@@ -68,11 +68,11 @@ frameworks:
 conversion:
  - html2pdf
    - how quirky is the html renderer?
- - xhtml2pdf
-   - same question
  - html2ps | ps2pdf [?]
  - wkhtml2pdf
    - http://code.google.com/p/wkhtmltopdf/
+ - xhtml2pdf
+   - quirky?
  - imagemagick (svg)
    - not so great, because output is raster
    - ~5MB outputs for fairly complex sheets at a fair resolutions
@@ -83,6 +83,9 @@ conversion:
    - java
    - looks like it just rasterizes?
    - have to test
+ - pysvg
+   - not much documentation
+   - author is obviously not cool (zip?? doc??)
  - svglib (python)
    - comes with an svg2pdf
  - svg2pdf (cairo)
@@ -108,5 +111,10 @@ TESTS
    - does not have an ubuntu package, used easy_install
    - svg2pdf -o svg2pdf-simple-test.pdf simple-test.svg
    - mangled output, though
- - html2pdf
-   - ####################
+ - xhtml2pdf
+   - No images
+   - CSS not perfect
+ - html2ps, ps2pdf
+   - oh my god it's horrific
+ - wkhtml2pdf
+   - 
