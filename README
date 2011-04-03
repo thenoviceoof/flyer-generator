@@ -68,6 +68,11 @@ frameworks:
 conversion:
  - html2pdf
    - how quirky is the html renderer?
+ - xhtml2pdf
+   - same question
+ - html2ps | ps2pdf [?]
+ - wkhtml2pdf
+   - http://code.google.com/p/wkhtmltopdf/
  - imagemagick (svg)
    - not so great, because output is raster
    - ~5MB outputs for fairly complex sheets at a fair resolutions
@@ -80,9 +85,28 @@ conversion:
    - have to test
  - svglib (python)
    - comes with an svg2pdf
+ - svg2pdf (cairo)
+   - seems old, unmaintained
+   - http://cgit.freedesktop.org/~cworth/svg2pdf/
 
 Linkfarm:
 http://stackoverflow.com/questions/1048205/how-to-programmatically-convert-svg-to-pdf-on-windows
 http://www.xhtml2pdf.com/
 http://pypi.python.org/pypi/svglib/
 http://code.google.com/apis/calendar/data/2.0/developers_guide_python.html
+http://wiki.python.org/moin/WebFrameworks
+
+TESTS
+----------------------------------------------------------------------
+ - Batik
+   - Use rasterizer -m "application/pdf" file
+   - does generates vector!
+ - Inkscape
+   - inkscape --export-pdf=out_file in_file
+   - inkscape -A out_file in_file
+ - svg2pdf (python)
+   - does not have an ubuntu package, used easy_install
+   - svg2pdf -o svg2pdf-simple-test.pdf simple-test.svg
+   - mangled output, though
+ - html2pdf
+   - ####################
