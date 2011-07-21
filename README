@@ -56,11 +56,15 @@ frameworks:
    - simple/lightweight
    - is an HTTP framework (not like PHP, has to run outside)
    - not heavily trafficed, not such a big deal
-   - moses is the documentation
+   - moses hackamura is the documentation
+   - can run it on a fucking phone
  - rails
    - heavy
  - django
    - heavy
+
+cherrypy doesn't come with a templating or db engine
+ - jinja2/sqlalchemy?
 
 conversion:
  - html2pdf
@@ -124,4 +128,5 @@ wkhtml2pdf - everyone knows html
  - easy to work with (by many people)
  - debuggable - can take apart and look at what went wrong
  - supported
-cherrypy?
+cherrypy!
+
