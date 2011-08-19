@@ -31,7 +31,7 @@ class Flyer():
         f.write(temp.render(title=title, subtitle=subtitle, content=content))
         f.close()
         # now convert it
-        subprocess.call(["/home/thenoviceoof/git/flyer-generator/wkhtmltopdf","tmp/adi.html","tmp/adi.pdf"])
+        subprocess.call([os.getcwd()+"/wkhtmltopdf","tmp/adi.html","tmp/adi.pdf"])
         raise cherrypy.HTTPRedirect("/adi.pdf")
     index.exposed = True
     flyer.exposed = True
