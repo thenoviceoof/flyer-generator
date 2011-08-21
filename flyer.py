@@ -23,29 +23,33 @@ class Flyer():
         'tools.staticdir.on': True,
         'tools.staticdir.dir' : os.getcwd()
         }
+    @cherrypy.expose
     def index(self):
         # grab the front page template from file
         # replace with FileLoader
         temp = self.env.get_template('front.html')
         return temp.render()
+    
+    @cherrypy.expose
     def render(self, title="", subtitle="", content=""):
         # convert the template
         temp = self.env.get_template('adi-1.html')
         # write it out to a temporary file
         return temp.render(title=title, subtitle=subtitle, content=content)
+    
+    @cherrypy.expose
     def flyer(self, title="", subtitle="", content=""):
         # convert the template
         temp = self.env.get_template('adi-1.html')
         # write it out to a temporary file
-        f = open("tmp/adi.html","w")
-        f.write(temp.render(title=title, subtitle=subtitle, content=content))
-        f.close()
+        html = temp.render(title=title, subtitle=subtitle, content=content)
         # now convert it
-        subprocess.call([os.getcwd()+"/wkhtmltopdf","tmp/adi.html","tmp/adi.pdf"])
-        raise cherrypy.HTTPRedirect("/tmp/adi.pdf")
-    index.exposed = True
-    render.exposed = True
-    flyer.exposed = True
+        proc = subprocess.Popen([os.getcwd()+"/wkhtmltopdf","-","-"],
+                    stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+        outdata, errdata = proc.communicate(input=html)
+        cherrypy.response.headers['Content-Type'] = 'application/pdf'
+        return outdata
 
-# start the engine on 8080
-cherrypy.quickstart(Flyer())
+if __name__ == "__main__":
+    # start the engine on 8080
+    cherrypy.quickstart(Flyer(), '/', 'site.conf')
