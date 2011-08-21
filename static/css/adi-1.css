@@ -1,0 +1,8 @@
+body {
+    /* padding:1em; */
+}
+
+h1, h2, div {
+    /* margin:auto 0; */
+    text-align:center;
+}

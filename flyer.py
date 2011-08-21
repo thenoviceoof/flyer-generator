@@ -14,10 +14,11 @@ from jinja2 import Template
 import os
 import subprocess
 
+# cherrypy class
 class Flyer():
     _cp_config = {
         'tools.staticdir.on': True,
-        'tools.staticdir.dir' : os.getcwd()+'/tmp'
+        'tools.staticdir.dir' : os.getcwd()
         }
     def index(self):
         # grab the front page template from file
@@ -26,6 +27,14 @@ class Flyer():
         s = f.read()
         temp = Template(s)
         return temp.render()
+    def render(self, title="", subtitle="", content=""):
+        # convert the template
+        f = open("static/adi-1.html")
+        s = f.read()
+        f.close()
+        temp = Template(s)
+        # write it out to a temporary file
+        return temp.render(title=title, subtitle=subtitle, content=content)
     def flyer(self, title="", subtitle="", content=""):
         # convert the template
         f = open("static/adi-1.html")
@@ -38,8 +47,9 @@ class Flyer():
         f.close()
         # now convert it
         subprocess.call([os.getcwd()+"/wkhtmltopdf","tmp/adi.html","tmp/adi.pdf"])
-        raise cherrypy.HTTPRedirect("/adi.pdf")
+        raise cherrypy.HTTPRedirect("/tmp/adi.pdf")
     index.exposed = True
+    render.exposed = True
     flyer.exposed = True
 
 # start the engine on 8080
