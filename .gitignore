@@ -2,3 +2,5 @@
 *.db
 *.pyc
 *tmp/*
+*.swp
+site.conf
