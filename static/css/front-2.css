@@ -1,0 +1,84 @@
+div#editor {
+    display:none;
+}
+
+li * {
+    vertical-align:middle;
+}
+
+label {
+    display:inline-block;
+    width:8em;
+    margin:0;
+    padding:0;
+    vertical-align:middle;
+}
+input {
+    width:20em;
+}
+textarea {
+    display:inline-block;
+    margin:0;
+    padding:0;
+    overflow:auto;
+}
+
+textarea#tagline {
+    width:20em;
+    height:3em;
+}
+textarea#description {
+    width:20em;
+    height:10em;
+}
+button {
+    display:inline-block;
+}
+
+div#styleEditor {
+    display:none;
+    font-size:18px;
+}
+div#fontChooserContainer {
+    display:none;
+    height:20em;
+    width:26em;
+}
+#styleEditor h3 { 
+    text-align:left;
+}
+
+body { 
+    width:7.5in;
+    height:10in;
+    font-size:12px;
+}
+
+#page {
+    font-family:Arial, 'Droid Serif';
+}
+
+h1, h2, h3, h4 {
+    margin:0 auto;
+    text-align:center;
+}
+h1 {
+    font-size:1.75cm;
+    margin:2cm auto;
+    width:7in;
+}
+h2 {
+    font-size:1cm;
+    margin:0.5cm auto;
+    width:7in;
+}
+h3 {
+    font-size:0.8cm;
+    margin:1cm auto;
+    width:6in;
+}
+h4 {
+    font-size:0.5cm;
+    margin:1cm auto;
+    width:6in;
+}

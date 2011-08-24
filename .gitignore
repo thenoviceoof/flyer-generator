@@ -3,4 +3,5 @@
 *.pyc
 *tmp/*
 *.swp
+wkhtmltopdf
 site.conf
