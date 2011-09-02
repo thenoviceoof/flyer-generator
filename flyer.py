@@ -18,8 +18,10 @@ import subprocess
 
 # cherrypy class
 class Flyer():
+    # config options
     _cp_config = {
         'tools.staticdir.on': True,
+        # this is very unsafe, will have to fix this eventually
         'tools.staticdir.dir' : os.getcwd()
         }
 
@@ -46,6 +48,11 @@ class Flyer():
         temp = self.env.get_template('adi-1.html')
         # write it out to a temporary file
         return temp.render(title=title, subtitle=subtitle, content=content)
+
+    @cherrypy.expose
+    def render_lolhawk(self, tagline="", des="", date="", time="", loc="",
+                       contact=""):
+        pass
     
     @cherrypy.expose
     def flyer(self, title="", subtitle="", content=""):

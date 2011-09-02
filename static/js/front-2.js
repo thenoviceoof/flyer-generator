@@ -31,16 +31,25 @@ function loadFont(fontName) {
     head.appendChild(style);
 }
 
+// keep everything in the closure
 $(function() {
-    $("#editor").dialog({width: "auto", title: "Flyer Generator r004"});
+    $("#editor").dialog({
+        autoOpen: false,
+        width: "auto",
+        title: "Flyer Generator r004"
+    });
     $("#date").datepicker({ showButtonPanel:true, numberOfMonths: 2 });
+
     // otherwise, only changes on blur/focus
-    $("input, textarea").keyup(function() { $(this).change() });
+    $("input, textarea").keyup(function() { 
+        $(this).change() 
+    });
     $("input, textarea").change(function() {
         var data = $(this).val();
         var d = data.replace(/\n/g,"<br/>");
         $("#"+$(this).attr("id")+"_body").html(d);
     });
+
     var debug = false;
     $("#debug").click(function(event) {
         if(debug) {
@@ -51,9 +60,14 @@ $(function() {
             debug = true;
         }
     });
+
+    // handle some specific changes on changing date formats
     $("#format").change(function() {
-        $( "#date" ).datepicker( "option", "dateFormat", $(this).val() );
+        $("#date").datepicker( "option", "dateFormat", $(this).val() );
+        $("#date").datepicker("refresh");
+        $("#date").change();
     });
+
     // set up way to reopen dialog in a non-intrusive way
     $("body").dblclick(function() {
         $("#editor").dialog("open");
@@ -82,6 +96,7 @@ $(function() {
         }
     }
 
+    // and some jq styling
     $("#styleEditor").dialog({title:"Style Editor",autoOpen:false,model:true,width:'auto'});
     $("#styler").click(function(){
         $("#styleEditor").dialog("open");
