@@ -65,8 +65,9 @@
           <li>
             <label for="format">Date Format options:</label>
 	    <select id="format" name="format">
-	      <option value="mm/dd/yy">Default - mm/dd/yy</option>
-	      <option value="d MM">Short - d M</option>
+              <!-- This default choice hooks into flyer.py and the js -->
+	      <option value="M d" selected="selected">Default - M d</option>
+	      <option value="mm/dd/yy">Full - mm/dd/yy</option>
 	      <option value="D d M">D d M</option>
 	      <option value="DD, d MM">DD d M</option>
 	      <option value="d M, yy">d M, yy</option>

@@ -40,8 +40,11 @@ $(function() {
     });
     $("#date").datepicker({
         showButtonPanel:true,
-        numberOfMonths: 2
+        numberOfMonths: 2,
+        dateFormat: "M d", // very brittle
+        defaultDate: $("#date").val()
     });
+    console.log($("#date").val());
     $("#more-options").click(function(e){
         $("#editor-options").toggle();
         $("#more-options").hide();
@@ -83,6 +86,7 @@ $(function() {
         return false;
     });
 
+    // ------------------------------------------------------------
     // load fonts
     for(var fam in fonts) {
         for(var f in fonts[fam][1]) {
