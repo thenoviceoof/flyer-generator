@@ -38,7 +38,16 @@ $(function() {
         width: "auto",
         title: "Flyer Generator r004"
     });
-    $("#date").datepicker({ showButtonPanel:true, numberOfMonths: 2 });
+    $("#date").datepicker({
+        showButtonPanel:true,
+        numberOfMonths: 2
+    });
+    $("#more-options").click(function(e){
+        $("#editor-options").toggle();
+        $("#more-options").hide();
+        e.preventDefault();
+        return false;
+    });
 
     // otherwise, only changes on blur/focus
     $("input, textarea").keyup(function() { 

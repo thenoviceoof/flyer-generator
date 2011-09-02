@@ -4,6 +4,9 @@ TODO
  - learn to use cherrypy
  - either refit lolhawk interface, or make a new one
  - learn how to use the google calendar API
+   - auto-populate fields
+   - can probably use magic cookies, since it's read-only
+ - test if svg images give better res
 
  - Future:
    - track users/content

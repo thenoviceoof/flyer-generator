@@ -40,6 +40,13 @@ div#editor {
     display:none;
 }
 
+#more-options {
+    display:block;
+}
+#editor-options {
+    display:none;
+}
+
 li * {
     vertical-align:middle;
 }

@@ -1,7 +1,8 @@
 *~
 *.db
 *.pyc
-*tmp/*
+*tmp/html/*.html
+*tmp/pdf/*.pdf
 *.swp
 wkhtmltopdf
 site.conf

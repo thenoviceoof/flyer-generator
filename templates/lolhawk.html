@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+  <head>
+    <!-- Standard jQuery/UI includes -->
+    <script type="text/javascript" src="{{ static_path }}/js/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="{{ static_path }}/js/jquery-ui-1.8.6.custom.min.js"></script>
+
+    <!-- standard stylesheets -->
+    <link rel="stylesheet" type="text/css" href="{{ static_path }}/css/reset.css" />
+    <link rel="stylesheet" type="text/css" href="{{ static_path }}/css/ui-lightness/jquery-ui-1.8.6.custom.css" />
+
+    <!-- Because IE8< is stupid -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- relevant stylesheet -->
+    <link rel="stylesheet" type="text/css" href="{{ static_path }}/css/lolhawk.css" />
+
+    <!-- relevant js -->
+    <script type="text/javascript" src="{{ static_path }}/js/lolhawk.js">
+    </script>
+
+  </head>
+
+  <body>
+
+    <div id="page">
+      <h1 id="tagline_body">{{ tagline }}</h1>
+      <h3 id="description_body">{{ description }}</h3>
+      <h2>
+        <span id="time_body">{{ time }}</span>
+        <span id="date_body">{{ date }}</span>
+      </h2>
+      <h2 id="location_body">{{ location }}</h2>
+      <h4 id="contact_body">{{ contact }}</h4>
+
+      <!--Fix this: need a good way to hot-swap footer/other branding-specific layout styles-->
+      <div style="display:block;position:absolute;top:6.4in;width:7.5in;">
+        <h4>Brought to you by the<br/>Application Development Initiative</h4>
+        <img src="{{ static_path }}/img/qrcode.png" style="height:6cm;float:left;" />
+        <img src="{{ static_path }}/img/adi_logo.png" style="height:4cm;float:right;margin-top:1cm;" />
+      </div>
+    </div>
+
+
+
+    <!-- Editor code -->
+    <div id="editor">
+      <form action="render_lolhawk">
+        <input type="submit" value="Render" />
+        <button id="more-options">More Options</button>
+        <ul id="editor-options">
+          <li>
+            <label for="tagline">Tagline:</label>
+            <textarea name="tagline" id="tagline">{{ tagline }}</textarea>
+          </li>
+          <li>
+            <label for="description">Description:</label>
+            <textarea name="description" id="description">{{ description}}</textarea>
+          </li>
+          <li>
+            <label for="date">Date:</label>
+            <input type="text" name="date" id="date" value="{{ date }}" />
+          </li>
+          <li>
+            <label for="format">Date Format options:</label>
+	    <select id="format" name="format">
+	      <option value="mm/dd/yy">Default - mm/dd/yy</option>
+	      <option value="d MM">Short - d M</option>
+	      <option value="D d M">D d M</option>
+	      <option value="DD, d MM">DD d M</option>
+	      <option value="d M, yy">d M, yy</option>
+	      <option value="d MM, yy">d MM, yy</option>
+	      <option value="DD, d MM, yy">DD, d MM, yy</option>
+	    </select>
+          </li>
+          <li>
+            <label for="time">Time:</label>
+            <input type="text" name="time" id="time" value="{{ time }}" />
+          </li>
+          <li>
+            <label for="location">Location:</label>
+            <input type="text" name="location" id="location" value="{{ location }}" />
+          </li>
+          <li>
+            <label for="contact">Contact:</label>
+            <input type="text" name="contact" id="contact" value="{{ contact }}" />
+          </li>
+          <li><button id="debug">debug</button></li>
+          <li><button id="styler" disable="true">Style Everything</button></li>
+        </ul>
+      </form>
+      <!-- Buttons -->
+    </div>
+
+    <div id="styleEditor">
+      <ul>
+        <li>
+          <button id="fontFamily">Change Font Family</button>
+          <div id="fontChooserContainer">
+            <div id="fontChooser">
+            </div>
+          </div>
+        </li>
+        <li>
+          <button id="fontSize">Change Font Size - WIP</button>
+        </li>
+        <li>
+          <button id="width">Change Width - WIP</button>
+        </li>
+    </div>
+
+  </body>
+</html>
