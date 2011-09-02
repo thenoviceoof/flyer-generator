@@ -1,13 +1,13 @@
-######################################################################
-# Flyer-Generator
-# ----------------------------------------
-# Web interface to generate PDF flyers
-######################################################################
+ Flyer-Generator
+================================================================================
 
 ABOUT
-----------------------------------------------------------------------
+================================================================================
 
 It's a web-interface for creating flyers quickly and easily. 
+
+User Stories
+--------------------------------------------------------------------------------
 
 Use story #1:
  - Person is doing workshop, wants flyer
@@ -22,118 +22,40 @@ Use story #2:
  - hit the big red button
  - download pdf
 
+
 INSTALL
-----------------------------------------------------------------------
-At the moment, you have to get it from github.
+================================================================================
 
-You'll need wkhtmltopdf for your platform is the top level directory,
-and to `touch site.conf` if you don't have a site.conf
+You have to get it from github:
 
-TODO
-----------------------------------------------------------------------
+    git clone git://github.com/thenoviceoof/flyer-generator.git
 
- - learn to use cherrypy
- - either refit lolhawk interface, or make a new one
-   - DETAILS HERE
- - convert2pdf! (easyyy)
- - learn how to use the google calendar API
-   - it's what we're using for the club
- - actually code it up
+You'll need these python libraries:
 
- - Future:
-   - track users/content
-     - show who made what at what time within org
-     - allow downloading old designed flyers (if lost)
-     - keep track of who's flyering where?
-     - allow drafts
-   - easily add new styles
-   - open up the interface to multiple clubs
+ * Cherrypy
+ * Jinja2
 
-IDEAS
-----------------------------------------------------------------------
+And you also need in the top level of the git repo (next to flyer.py):
 
-basic idea: 
-      user ←→ web framework ←→ google / 2pdf
+ * A copy of wkhtmltopdf from <http://code.google.com/p/wkhtmltopdf/>
+ * A copy of site.conf: if you don't have one, just
+       touch site.conf
+ * A tmp directory (run `mkdir tmp`)
 
-frameworks:
- - web.py
-   - no documentation
-   - simple/lightweight
- - cherrypy?
-   - simple/lightweight
-   - is an HTTP framework (not like PHP, has to run outside)
-   - not heavily trafficed, not such a big deal
-   - moses hackamura is the documentation
-   - can run it on a fucking phone
- - rails
-   - heavy
- - django
-   - heavy
 
-cherrypy doesn't come with a templating or db engine
- - jinja2/sqlalchemy?
+USAGE
+================================================================================
 
-conversion:
- - html2pdf
-   - how quirky is the html renderer?
- - html2ps | ps2pdf [?]
- - wkhtml2pdf
-   - http://code.google.com/p/wkhtmltopdf/
- - xhtml2pdf
-   - quirky?
- - imagemagick (svg)
-   - not so great, because output is raster
-   - ~5MB outputs for fairly complex sheets at a fair resolutions
- - inkscape (svg2pdf)
-   - doesn't come standard on server boxes
-   - we'll have to run it on the ADI server, which isn't a bad thing
- - batik (svg)
-   - java
-   - looks like it just rasterizes?
-   - have to test
- - pysvg
-   - not much documentation
-   - author is obviously not cool (zip?? doc??)
- - svglib (python)
-   - comes with an svg2pdf
- - svg2pdf (cairo)
-   - seems old, unmaintained
-   - http://cgit.freedesktop.org/~cworth/svg2pdf/
+To run:
 
-Linkfarm:
-http://stackoverflow.com/questions/1048205/how-to-programmatically-convert-svg-to-pdf-on-windows
-http://www.xhtml2pdf.com/
-http://pypi.python.org/pypi/svglib/
-http://code.google.com/apis/calendar/data/2.0/developers_guide_python.html
-http://wiki.python.org/moin/WebFrameworks
+    ./flyer.py
 
-TESTS
-----------------------------------------------------------------------
- - Batik
-   - Use rasterizer -m "application/pdf" file
-   - does generates vector!
- - Inkscape
-   - inkscape --export-pdf=out_file in_file
-   - inkscape -A out_file in_file
- - svg2pdf (python)
-   - does not have an ubuntu package, used easy_install
-   - svg2pdf -o svg2pdf-simple-test.pdf simple-test.svg
-   - mangled output, though
- - xhtml2pdf
-   - No images
-   - CSS not perfect
- - html2ps, ps2pdf
-   - oh my god it's horrific
- - wkhtml2pdf
-   - works like a charm
-   - static, might not need dependencies
 
-STUFF DECIDED ON 
-----------------------------------------------------------------------
+BUGS
+================================================================================
 
-wkhtml2pdf - everyone knows html
- - easy to work with (by many people)
- - debuggable - can take apart and look at what went wrong
- - supported
-cherrypy!
+Bugs aren't cool, telling us about bugs is. Report issues/suggestions on github:
+
+https://github.com/thenoviceoof/flyer-generator/issues
+
 
