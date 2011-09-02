@@ -13,8 +13,33 @@ from jinja2 import Environment, FileSystemLoader
 # utility modules
 import os
 import subprocess
+import time
+import json
+import urllib
+
+# google calendar client
+import gdata.calendar.client
 
 ################################################################################
+
+# right now, just hardcoded
+calendar_url = "https://www.google.com/calendar/feeds/adicu.com_tud5etmmo5mfmuvdfb54u733i4%40group.calendar.google.com/public/full"
+
+# rfc3339 is the format gcal uses
+### make this
+def rfc3339(t):
+    """Convert a time struct to an rfc3339 string"""
+    st = time.strftime("%Y-%m-%dT%H:%M:%S.000",t)
+    st += ("-%02d:00" % time.timezone/3600)
+    return st
+def cfr3339(s):
+    """Convert an rfc3339 string to a time struct"""
+    # ex: 2011-09-03T22:00:00.000-04:00
+    t = time.mktime(time.strptime(s[0:23], "%Y-%m-%dT%H:%M:%S.000"))
+    # probably want to ignore this
+    #tz = 3600*int(s[23:26])
+    #t += tz
+    return time.localtime(t)
 
 # cherrypy class
 class Flyer():
@@ -30,36 +55,70 @@ class Flyer():
 	
     @cherrypy.expose
     def index(self):
+        # grab google calendar events
+        client = gdata.calendar.client.CalendarClient()
+        # but only get upcoming events
+        t = time.localtime()
+        start_date = "%d-%02d-%02d" % (t[0],t[1],t[2])
+        # we need to handle getting upcoming days
+        et = time.localtime(time.mktime((t[0],t[1],t[2]+14, 0,0,0, 0,0,-1)))
+        end_date = "%d-%02d-%02d" % (et[0],et[1],et[2])
+        # build the calendar event query
+        query = gdata.calendar.client.CalendarEventQuery()
+        query.start_min = start_date
+        # actually get the feed
+        feed = client.get_calendar_event_feed(uri=calendar_url, q=query)
+        # and put it into a sane structure
+        events = [{"title":event.title.text,
+                   "datetime": event.when[0].start,
+                   "description": event.content.text,
+                   "location": event.where[0].value,
+                   }
+                  for event in feed.entry]
+        events = [[event, json.dumps(event)] for event in events]
         # grab the front page template from file
-        # replace with FileLoadern
         temp = self.env.get_template('front.html')
-        return temp.render()
-    
-    @cherrypy.expose
-    def render(self, title="", subtitle="", content=""):
-        # convert the template
-        temp = self.env.get_template('adi-1.html')
-        # write it out to a temporary file
-        return temp.render(title=title, subtitle=subtitle, content=content)
+        return temp.render(events=events)
 
-    # experimental: shoving the lolhawk stuff into this
     @cherrypy.expose
-    def lolhawk(self):
+    def template(self):
+        """This displays an empty thing"""
         # grab the front page template from file
         temp = self.env.get_template('lolhawk.html')
         return temp.render(static_path = "",
                            tagline="Tagline", description="Description",
                            date="Today", time="9PM",
-                           location="Location", contact="Contact")
+                           location="Location")
     @cherrypy.expose
-    def render_lolhawk(self, tagline="", description="", date="", time="",
-                       location="", contact="", format=""):
+    def event(self, data=""):
+        """This displays a gcal event"""
+        # convert it back from uri format
+        data = urllib.unquote_plus(data)
+        event = json.loads(data)
+        # and now handle the time stuff
+        datetime = cfr3339(event["datetime"])
+        date = "%s %d" % (time.strftime("%b",datetime), datetime[2])
+        h = datetime[3]%12
+        if h==0:
+            h = 12
+        t    = "%d %s" % (h, time.strftime("%p",datetime))
+        # grab the front page template from file
+        temp = self.env.get_template('lolhawk.html')
+        return temp.render(static_path = "",
+                           tagline=event["title"],
+                           description=event["description"],
+                           date=date, time=t,
+                           location=event["location"])
+
+    @cherrypy.expose
+    def flyer(self, tagline="", description="", date="", time="",
+               location="", format=""):
         # get the template
         temp = self.env.get_template('lolhawk.html')
         # render template output
         html = temp.render(static_path=os.getcwd()+"/static", tagline=tagline,
                            description=description, date=date, time=time,
-                           location=location, contact=contact)
+                           location=location)
         # now, convert it
         ### need to do error handling
         proc = subprocess.Popen([os.getcwd()+"/wkhtmltopdf","-","-"],
@@ -68,19 +127,8 @@ class Flyer():
         cherrypy.response.headers['Content-Type'] = 'application/pdf'
         ### maybe save pdf, also
         return outdata
-    
-    @cherrypy.expose
-    def flyer(self, title="", subtitle="", content=""):
-        # convert the template
-        temp = self.env.get_template('adi-1.html')
-        # render template output
-        html = temp.render(title=title, subtitle=subtitle, content=content)
-        # now convert it
-        proc = subprocess.Popen([os.getcwd()+"/wkhtmltopdf","-","-"],
-                    stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-        outdata, errdata = proc.communicate(input=html)
-        cherrypy.response.headers['Content-Type'] = 'application/pdf'
-        return outdata
+
+################################################################################
 
 if __name__ == "__main__":
     # start the engine on 8080

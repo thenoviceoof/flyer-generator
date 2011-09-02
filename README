@@ -34,6 +34,7 @@ You'll need these python libraries:
 
  * Cherrypy
  * Jinja2
+ * Google Calendar <http://code.google.com/p/gdata-python-client/downloads/list>
 
 And you also need in the top level of the git repo (next to flyer.py):
 

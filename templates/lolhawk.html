@@ -33,7 +33,6 @@
         <span id="date_body">{{ date }}</span>
       </h2>
       <h2 id="location_body">{{ location }}</h2>
-      <h4 id="contact_body">{{ contact }}</h4>
 
       <!--Fix this: need a good way to hot-swap footer/other branding-specific layout styles-->
       <div style="display:block;position:absolute;top:6.4in;width:7.5in;">
@@ -47,7 +46,7 @@
 
     <!-- Editor code -->
     <div id="editor">
-      <form action="render_lolhawk">
+      <form action="flyer">
         <input type="submit" value="Render" />
         <button id="more-options">More Options</button>
         <ul id="editor-options">
@@ -82,10 +81,6 @@
           <li>
             <label for="location">Location:</label>
             <input type="text" name="location" id="location" value="{{ location }}" />
-          </li>
-          <li>
-            <label for="contact">Contact:</label>
-            <input type="text" name="contact" id="contact" value="{{ contact }}" />
           </li>
           <li><button id="debug">debug</button></li>
           <li><button id="styler" disable="true">Style Everything</button></li>
