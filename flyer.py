@@ -93,7 +93,7 @@ class Flyer():
     def event(self, data=""):
         """This displays a gcal event"""
         # convert it back from uri format
-        data = urllib.unquote_plus(data)
+        # data = urllib.unquote_plus(data)
         event = json.loads(data)
         # and now handle the time stuff
         datetime = cfr3339(event["datetime"])

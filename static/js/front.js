@@ -7,9 +7,22 @@ $(document).ready(function(){
             obj = obj.parent();
         var t = obj.find(".data").text()
         t = t.trim();
-        console.log(t)
-        var l = "/event?data="+encodeURI(t);
-        console.log(l);
-        window.location = l;
+        console.log(t);
+
+        /* var l = "/event?data="+encodeURI(t);
+        console.log(l); */
+
+        var form = $("<form>")
+            .attr("method","POST")
+            .attr("action","/event")
+        ;
+        var input = $("<input>")
+            .attr("type","hidden")
+            .attr("name","data")
+            .attr("value",t)
+        ;
+        form.append(input);
+        form.submit();
+        // window.location = l;
     });
 });
