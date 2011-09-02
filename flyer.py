@@ -25,10 +25,10 @@ import gdata.calendar.client
 # right now, just hardcoded
 calendar_url = "https://www.google.com/calendar/feeds/adicu.com_tud5etmmo5mfmuvdfb54u733i4%40group.calendar.google.com/public/full"
 
-# rfc3339 is the format gcal uses
-### make this
+# rfc3339 is the time/date format gcal uses
 def rfc3339(t):
     """Convert a time struct to an rfc3339 string"""
+    # ex: 2011-09-03T22:00:00.000-04:00
     st = time.strftime("%Y-%m-%dT%H:%M:%S.000",t)
     st += ("-%02d:00" % time.timezone/3600)
     return st
@@ -51,10 +51,13 @@ class Flyer():
         }
 
     def __init__(self):
+        # no sense in 
         self.env = Environment(loader = FileSystemLoader('templates'))
 	
     @cherrypy.expose
     def index(self):
+        """Grabs google calendar events and displays them, with links to
+        a template pre-populated with the event information"""
         # grab google calendar events
         client = gdata.calendar.client.CalendarClient()
         # but only get upcoming events
@@ -82,7 +85,7 @@ class Flyer():
 
     @cherrypy.expose
     def template(self):
-        """This displays an empty thing"""
+        """This displays a template filled with dumb values"""
         # grab the front page template from file
         temp = self.env.get_template('lolhawk.html')
         return temp.render(static_path = "",
@@ -91,9 +94,8 @@ class Flyer():
                            location="Location")
     @cherrypy.expose
     def event(self, data=""):
-        """This displays a gcal event"""
+        """This displays a template populated with event data from gcal"""
         # convert it back from uri format
-        # data = urllib.unquote_plus(data)
         event = json.loads(data)
         # and now handle the time stuff
         datetime = cfr3339(event["datetime"])
@@ -113,6 +115,7 @@ class Flyer():
     @cherrypy.expose
     def flyer(self, tagline="", description="", date="", time="",
                location="", format=""):
+        """Actually render the pdf from the template html"""
         # get the template
         temp = self.env.get_template('lolhawk.html')
         # render template output
@@ -131,6 +134,5 @@ class Flyer():
 ################################################################################
 
 if __name__ == "__main__":
-    # start the engine on 8080
-    # if you don't have a site.conf, just do a `touch site.conf`
+    # replace this eventually with non-quickstart
     cherrypy.quickstart(Flyer(), '/', 'site.conf')
