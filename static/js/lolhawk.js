@@ -38,6 +38,7 @@ $(function() {
         width: "auto",
         title: "Flyer Generator r004"
     });
+    setTimeout(function(){$("#editor").dialog("open")},1000);
     $("#date").datepicker({
         showButtonPanel:true,
         numberOfMonths: 2,
