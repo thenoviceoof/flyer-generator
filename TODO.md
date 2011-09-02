@@ -1,27 +1,28 @@
 TODO
 ================================================================================
 
- - learn to use cherrypy
- - either refit lolhawk interface, or make a new one
- - learn how to use the google calendar API
-   - auto-populate fields
-   - can probably use magic cookies, since it's read-only
- - test if svg images give better res
+In rough order of what to do...
 
- - Future:
-   - track users/content
-     - show who made what at what time within org
-     - allow downloading old designed flyers (if lost)
-     - keep track of who's flyering where?
-     - allow drafts
-   - easily add new styles
-   - open up the interface to multiple clubs
+ - make it look better
+   - / needs a style/actual interface
+ - test if svg images give better res than png images
+   - generate svg versions of the logo
+   - change the template to include the svg
+   - compare svg vs png versions of pdf
+ - make the fields on the template contentEditable
+ - decide if current fields are enough
+ - create the style editor
+ - add multiple styles
+   - need to abstract out the render dialog
+   - style editor also needs to be abstracted (or restricted)
+   - need interface to choose styles somewhere
+ - allow more styles to be added easily
+   - ties in with the previous
+ - store past PDFs in a directory/track them in a db
+   - sqlite, maybe
+ - do drafts (db)
+   - store meta info (fields) in a draft
+ - do auth
+   - mostly as prep for the next step
+ - add meta-info/hook into auth so interface is open to other clubs
 
-STUFF DECIDED ON 
-================================================================================
-
-wkhtml2pdf - everyone knows html
- - easy to work with (by many people)
- - debuggable - can take apart and look at what went wrong
- - supported
-cherrypy!

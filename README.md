@@ -52,6 +52,14 @@ To run:
     ./flyer.py
 
 
+Real Usage
+--------------------------------------------------------------------------------
+
+To write your own templates:
+
+  * Be sure to target webkit, since that's what wkhtmltopdf uses
+
+
 BUGS
 ================================================================================
 
