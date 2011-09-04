@@ -1,0 +1,41 @@
+body {
+    width:30em;
+    margin: 0 auto;
+    font-family:sans-serif;
+    text-align:center;
+}
+
+body * {
+    text-align:left;
+}
+
+ul {
+    list-style:none;
+}
+
+ul li {
+    padding:0.5em;
+    margin:0.5em;
+    background-color:#CCC;
+    border-radius:0.5em;
+}
+
+.event {
+    cursor:pointer;
+}
+
+.event time, .event div {
+    display:block;
+    margin:0.3em;
+    padding:0.2em;
+}
+
+.event time span, .event div span {
+    padding:0.2em;
+    background-color:#DDD;
+    border-radius:0.4em;
+}
+
+.event h2 {
+    margin:0;
+}

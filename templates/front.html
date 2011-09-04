@@ -1,23 +1,25 @@
 <!doctype html>
 <html>
   <head>
+    <link rel="stylesheet" href="/css/front.css" />
+    
     <script src="/js/jquery-1.4.2.min.js"></script>
     <script src="/js/front.js"></script>
   </head>
 
   <body>
-    <h1>Hi world!</h1>
+    <h1>Flyer Generator 1.1</h1>
 
     <ul>
       {% for event in events: %}
       <li class="event">
         <h2>{{ event[0]["title"] }}</h2>
         <time>
+          Time:
           <span>{{ event[0]["datetime"] }}</span>
-          <span>{{ event[0]["time"] }}</span>
         </time>
-        <div>{{ event[0]["location"] }}</div>
-        <div>{{ event[0]["description"] }}</div>
+        <div>Location: <span>{{ event[0]["location"] }}</span></div>
+        <div>Description: <span>{{ event[0]["description"] }}</span></div>
         <div class="data" style="display:none;">
           {{ event[1] }}
         </div>
