@@ -1,0 +1,3 @@
+Cherrypy
+Jinja2
+gdata.calendar.client
