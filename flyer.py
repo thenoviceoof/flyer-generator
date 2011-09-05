@@ -1,6 +1,6 @@
 #!/usr/bin/python
 ################################################################################
-# First iteration flyer gen
+# flyer.py generator
 ################################################################################
 
 # ZE WEB THINGIE
@@ -41,13 +41,15 @@ def cfr3339(s):
     #t += tz
     return time.localtime(t)
 
+cwd = os.path.dirname(os.path.abspath(__file__))
+
 # cherrypy class
 class Flyer():
     # config options
     _cp_config = {
         'tools.staticdir.on': True,
         # this is very unsafe, will have to fix this eventually
-        'tools.staticdir.dir' : os.getcwd()+"/static/"
+        'tools.staticdir.dir' : cwd+"/static/"
         }
 
     def __init__(self):
@@ -119,12 +121,12 @@ class Flyer():
         # get the template
         temp = self.env.get_template('lolhawk.html')
         # render template output
-        html = temp.render(static_path=os.getcwd()+"/static", tagline=tagline,
+        html = temp.render(static_path=cwd+"/static", tagline=tagline,
                            description=description, date=date, time=time,
                            location=location)
         # now, convert it
         ### need to do error handling
-        proc = subprocess.Popen([os.getcwd()+"/wkhtmltopdf","-","-"],
+        proc = subprocess.Popen([cwd+"/wkhtmltopdf","-","-"],
                     stdin=subprocess.PIPE, stdout=subprocess.PIPE)
         outdata, errdata = proc.communicate(input=html)
         cherrypy.response.headers['Content-Type'] = 'application/pdf'
