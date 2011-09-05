@@ -4,5 +4,6 @@
 *tmp/html/*.html
 *tmp/pdf/*.pdf
 *.swp
+*.so.*
 wkhtmltopdf
 site.conf

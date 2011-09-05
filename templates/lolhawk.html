@@ -35,7 +35,7 @@
       <h2 id="location_body">{{ location }}</h2>
 
       <!--Fix this: need a good way to hot-swap footer/other branding-specific layout styles-->
-      <div style="display:block;position:absolute;top:6.4in;width:7.5in;">
+      <div style="display:block;position:absolute;top:6.3in;width:7.5in;">
         <h4>Brought to you by the<br/>Application Development Initiative</h4>
         <img src="{{ static_path }}/img/qrcode.png" style="height:6cm;float:left;" />
         <img src="{{ static_path }}/img/adi_logo.png" style="height:4cm;float:right;margin-top:1cm;" />
@@ -46,7 +46,7 @@
 
     <!-- Editor code -->
     <div id="editor">
-      <form action="flyer">
+      <form action="flyer" method="POST">
         <input type="submit" value="Render" />
         <button id="more-options">More Options</button>
         <ul id="editor-options">

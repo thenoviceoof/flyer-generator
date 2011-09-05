@@ -44,6 +44,21 @@ And you also need in the top level of the git repo (next to flyer.py):
  * A tmp directory (run `mkdir tmp`)
 
 
+DOTCLOUD INSTALL
+================================================================================
+
+So you want to upload this to dotcloud?
+
+ * Sign up for a dotcloud account
+ * Install the dotcloud client side CLI
+ * Register your API key with your client
+ * Then, do this:
+
+    dotcloud push --all flyergen .
+
+ * The --all option pushes your wkhtmltopdf along with everything else
+
+
 USAGE
 ================================================================================
 

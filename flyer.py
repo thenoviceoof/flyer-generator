@@ -126,9 +126,21 @@ class Flyer():
                            location=location)
         # now, convert it
         ### need to do error handling
-        proc = subprocess.Popen([cwd+"/wkhtmltopdf","-","-"],
-                    stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+        proc = subprocess.Popen([cwd+"/wkhtmltopdf",
+                                 "--page-size","Letter",
+                                 "-","-"],
+                                stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                                # to get wkhtmltopdf to stop complaining
+                                # about a missing libXrender.so.1
+                                env={"LD_LIBRARY_PATH":
+                                         "%s" % cwd},
+                                shell=False)
         outdata, errdata = proc.communicate(input=html)
+        cherrypy.log("Outdata: "+str(len(str(outdata))))
+        cherrypy.log("Errdata: "+str(errdata))
+        if not(errdata is None):
+            cherrypy.log("Error: "+errdata)
+            return "Error: "+errdata
         cherrypy.response.headers['Content-Type'] = 'application/pdf'
         ### maybe save pdf, also
         return outdata
