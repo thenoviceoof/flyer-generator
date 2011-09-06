@@ -73,7 +73,7 @@ $(function() {
             debug = true;
         }
         // otherwise, form will submit
-        e.preventDefault();
+        event.preventDefault();
         return false;
     });
 
@@ -113,6 +113,7 @@ $(function() {
         }
     }
 
+    // ------------------------------------------------------------
     // and some jq styling
     $("#styleEditor").dialog({
         title:"Style Editor",
@@ -120,7 +121,7 @@ $(function() {
         model:true,
         width:'auto'
     });
-    $("#styler").click(function(){
+    $("#styler").click(function(e){
         $("#styleEditor").dialog("open");
         // otherwise, form will submit
         e.preventDefault();
