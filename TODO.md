@@ -3,8 +3,6 @@ TODO
 
 In rough order of what to do...
 
- - make it look better
-   - / needs a style/actual interface
  - test if svg images give better res than png images
    - generate svg versions of the logo
    - change the template to include the svg

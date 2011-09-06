@@ -72,6 +72,9 @@ $(function() {
             $("body").css("border","1px black solid");
             debug = true;
         }
+        // otherwise, form will submit
+        e.preventDefault();
+        return false;
     });
 
     // handle some specific changes on changing date formats
@@ -111,9 +114,17 @@ $(function() {
     }
 
     // and some jq styling
-    $("#styleEditor").dialog({title:"Style Editor",autoOpen:false,model:true,width:'auto'});
+    $("#styleEditor").dialog({
+        title:"Style Editor",
+        autoOpen:false,
+        model:true,
+        width:'auto'
+    });
     $("#styler").click(function(){
         $("#styleEditor").dialog("open");
+        // otherwise, form will submit
+        e.preventDefault();
+        return false;
     });
     $("#fontChooser").accordion({autoHeight:false});
     $("#fontFamily").click(function(){
