@@ -33,10 +33,32 @@ function loadFont(fontName) {
 
 // keep everything in the closure
 $(function() {
+    $("#render").click(function(e){
+	var f = $("<form>").attr({"action":"/flyer",
+				  "method":"POST",
+				  "target":"_self"});
+
+	var tag = $("<input>").attr("name","tagline");
+	var des = $("<input>").attr("name","description");
+	var date = $("<input>").attr("name","date");
+	var time = $("<input>").attr("name","time");
+	var loc = $("<input>").attr("name","location");
+
+	tag.val($("#tagline_body").html());
+	des.val($("#description_body").html());
+	date.val($("#date_body").html());
+	time.val($("#time_body").html());
+	loc.val($("#location_body").html());
+
+	f.append(tag).append(des).append(date).append(time).append(loc);
+	$("body").append(f);
+	f.submit();
+    });
+
     $("#editor").dialog({
         autoOpen: false,
         width: "auto",
-        title: "Flyer Generator r004"
+        title: "Flyer Generator Editor"
     });
     setTimeout(function(){$("#editor").dialog("open")},1000);
     $("#date").datepicker({
@@ -51,16 +73,6 @@ $(function() {
         $("#more-options").hide();
         e.preventDefault();
         return false;
-    });
-
-    // otherwise, only changes on blur/focus
-    $("input, textarea").keyup(function() { 
-        $(this).change() 
-    });
-    $("input, textarea").change(function() {
-        var data = $(this).val();
-        var d = data.replace(/\n/g,"<br/>");
-        $("#"+$(this).attr("id")+"_body").html(d);
     });
 
     var debug = false;
@@ -86,7 +98,11 @@ $(function() {
 
     // set up way to reopen dialog in a non-intrusive way
     $("body").dblclick(function() {
-        $("#editor").dialog("open");
+        // $("#editor").dialog("open");
+	if($("#page").attr("contenteditable") == "false")
+	    $("#page").attr("contenteditable","true");
+	else
+	    $("#page").attr("contenteditable","false");
         return false;
     });
 
@@ -115,12 +131,6 @@ $(function() {
 
     // ------------------------------------------------------------
     // and some jq styling
-    $("#styleEditor").dialog({
-        title:"Style Editor",
-        autoOpen:false,
-        model:true,
-        width:'auto'
-    });
     $("#styler").click(function(e){
         $("#styleEditor").dialog("open");
         // otherwise, form will submit

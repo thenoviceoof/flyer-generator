@@ -25,7 +25,7 @@
 
   <body>
 
-    <div id="page">
+    <div id="page" contenteditable="false">
       <h1 id="tagline_body">{{ tagline }}</h1>
       <h3 id="description_body">{{ description }}</h3>
       <h2>
@@ -46,32 +46,19 @@
 
     <!-- Editor code -->
     <div id="editor">
-      <form action="flyer" method="POST">
-        <input type="submit" value="Render" />
+        <button id="render">Render</button>
         <button id="more-options">More Options</button>
         <ul id="editor-options">
-          <li>
-            <label for="tagline">Tagline:</label>
-            <textarea name="tagline" id="tagline">{{ tagline }}</textarea>
-          </li>
-          <li>
-            <label for="description">Description:</label>
-            <textarea name="description" id="description">{{ description}}</textarea>
-          </li>
-          <li>
-            <label for="date">Date:</label>
-            <input type="text" name="date" id="date" value="{{ date }}" />
-          </li>
-          <li>
+          <!-- <li>
             <label for="format">Date Format options:</label>
             <!-- <div>
               <button>Weekday</button>
               <button>Month</button>
               <button>Day</button>
               <input id="" />
-            </div> -->
+            </div> 
 	    <select id="format" name="format">
-              <!-- This default choice hooks into flyer.py and the js -->
+              <!-- This default choice hooks into flyer.py and the js 
 	      <option value="M d" selected="selected">Default - M d</option>
 	      <option value="D M d">D M d</option>
 	      <option value="mm/dd/yy">Full - mm/dd/yy</option>
@@ -80,37 +67,29 @@
 	      <option value="d MM, yy">d MM, yy</option>
 	      <option value="DD, d MM, yy">DD, d MM, yy</option>
 	    </select>
-          </li>
-          <li>
-            <label for="time">Time:</label>
-            <input type="text" name="time" id="time" value="{{ time }}" />
-          </li>
-          <li>
-            <label for="location">Location:</label>
-            <input type="text" name="location" id="location" value="{{ location }}" />
-          </li>
+          </li> -->
           <li><button id="debug">debug</button></li>
-          <li><button id="styler" disable="true">Style Everything</button></li>
+	  <li>
+	    <div id="styleEditor">
+	      <ul>
+		<li>
+		  <button id="fontFamily">Change Font Family</button>
+		  <div id="fontChooserContainer">
+		    <div id="fontChooser">
+		    </div>
+		  </div>
+		</li>
+		<li>
+		  <button id="fontSize">Change Font Size - WIP</button>
+		</li>
+		<li>
+		  <button id="width">Change Width - WIP</button>
+		</li>
+	    </div>
+	  </li>
         </ul>
       </form>
       <!-- Buttons -->
-    </div>
-
-    <div id="styleEditor">
-      <ul>
-        <li>
-          <button id="fontFamily">Change Font Family</button>
-          <div id="fontChooserContainer">
-            <div id="fontChooser">
-            </div>
-          </div>
-        </li>
-        <li>
-          <button id="fontSize">Change Font Size - WIP</button>
-        </li>
-        <li>
-          <button id="width">Change Width - WIP</button>
-        </li>
     </div>
 
   </body>

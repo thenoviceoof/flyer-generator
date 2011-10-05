@@ -9,20 +9,18 @@ $(document).ready(function(){
         t = t.trim();
         console.log(t);
 
-        /* var l = "/event?data="+encodeURI(t);
-        console.log(l); */
-
         var form = $("<form>")
             .attr("method","POST")
             .attr("action","/event")
-        ;
+	; 
         var input = $("<input>")
             .attr("type","hidden")
             .attr("name","data")
             .attr("value",t)
         ;
         form.append(input);
+	// handle firefox fickleness
+	$("body").append(form);
         form.submit();
-        // window.location = l;
     });
 });

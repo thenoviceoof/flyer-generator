@@ -44,6 +44,10 @@ div#editor {
     display:none;
 }
 
+#render {
+    width:10em;
+    font-size:2em;
+}
 #more-options {
     display:block;
 }
@@ -55,41 +59,15 @@ li * {
     vertical-align:middle;
 }
 
-label {
-    display:inline-block;
-    width:8em;
-    margin:0;
-    padding:0;
-    vertical-align:middle;
-}
-input {
-    width:20em;
-}
-textarea {
-    display:inline-block;
-    margin:0;
-    padding:0;
-    overflow:auto;
-}
-
-textarea#tagline {
-    width:20em;
-    height:3em;
-}
-textarea#description {
-    width:20em;
-    height:10em;
-}
-
 button {
-    display:inline-block;
+    display:block;
+    font-size:18px;
 }
 
 /* ---------------------------------------------------------------------- */
 
 div#styleEditor {
-    display:none;
-    font-size:18px;
+    /* display:none; */
 }
 div#fontChooserContainer {
     display:none;
