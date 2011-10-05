@@ -103,11 +103,12 @@ class Flyer():
         event = json.loads(data)
         # and now handle the time stuff
         datetime = cfr3339(event["datetime"])
-        date = "%s %d" % (time.strftime("%b",datetime), datetime[2])
+        date = "%s %s %d" % (time.strftime("%a",datetime), 
+                          time.strftime("%b",datetime), datetime[2])
         h = datetime[3]%12
         if h==0:
             h = 12
-        t    = "%d %s" % (h, time.strftime("%p",datetime))
+        t = "%d %s" % (h, time.strftime("%p",datetime))
         # grab the front page template from file
         temp = self.env.get_template('lolhawk.html')
         return temp.render(static_path = "",
