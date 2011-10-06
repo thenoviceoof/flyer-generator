@@ -52,6 +52,12 @@ So you want to upload this to dotcloud?
  * Sign up for a dotcloud account
  * Install the dotcloud client side CLI
  * Register your API key with your client
+ * Find a copy of libXrender.so.1 for linux - under Ubuntu 11.04, this sits under
+
+    /usr/lib/x86_64-linux-gnu/libXrender.so.1
+
+   Copy it here, so that wkhtmltopdf actually runs under dotcloud
+
  * Then, do this:
 
     dotcloud push --all flyergen .
