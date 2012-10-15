@@ -31,13 +31,17 @@ CALENDAR_URL = ("https://www.google.com/calendar/feeds/adicu.com_"
 
 # rfc3339 is the time/date format gcal uses
 def rfc3339(t):
-    """Convert a time struct to an rfc3339 string"""
+    '''
+    Convert a time struct to an rfc3339 string
+    '''
     # ex: 2011-09-03T22:00:00.000-04:00
     st = time.strftime("%Y-%m-%dT%H:%M:%S.000",t)
     st += ("-%02d:00" % time.timezone/3600)
     return st
 def cfr3339(s):
-    """Convert an rfc3339 string to a time struct"""
+    '''
+    Convert an rfc3339 string to a time struct
+    '''
     # ex: 2011-09-03T22:00:00.000-04:00
     try:
         t = time.mktime(time.strptime(s[0:23], "%Y-%m-%dT%H:%M:%S.000"))
@@ -109,39 +113,46 @@ class Flyer():
         return temp.render(events=events)
 
     @cherrypy.expose
-    def template(self):
-        """This displays a template filled with dumb values"""
-        # grab the front page template from file
-        temp = self.env.get_template('lolhawk.html')
-        return temp.render(static_path = "",
-                           tagline="Tagline", description="Description",
-                           date="Today", time="9PM",
-                           location="Location")
-    @cherrypy.expose
-    def event(self, data=""):
-        """This displays a template populated with event data from gcal"""
-        # convert it back from uri format
+    def event(self, data=''):
+        '''
+        Serve up json detailing the event
+        '''
         event = json.loads(data)
         # and now handle the time stuff
         datetime = cfr3339(event["datetime"])
         date = "%s %s %d" % (time.strftime("%a",datetime), 
                           time.strftime("%b",datetime), datetime[2])
-        h = datetime[3]%12
+        h = datetime[3] % 12
         if h==0:
             h = 12
         t = "%d %s" % (h, time.strftime("%p",datetime))
         # grab the front page template from file
-        temp = self.env.get_template('lolhawk.html')
-        return temp.render(static_path = "",
-                           tagline=event["title"],
-                           description=event["description"],
-                           date=date, time=t,
-                           location=event["location"])
+        d = {
+            'tagline': event['title'],
+            'description': event['description'],
+            'date': date,
+            'time': t,
+            'location': event['location']
+            }
+        return json.dumps()
+
+    @cherrypy.expose
+    def template(self, style=None):
+        '''
+        This displays a template filled with dumb values
+        '''
+        # grab the front page template from file
+        if style is None:
+            style = 'lolhawk.html'
+        temp = self.env.get_template(style)
+        return temp.render(static_path = "")
 
     @cherrypy.expose
     def flyer(self, tagline="", description="", date="", time="",
                location="", format=""):
-        """Actually render the pdf from the template html"""
+        '''
+        Actually render the pdf from the template html
+        '''
         # get the template
         temp = self.env.get_template('lolhawk.html')
         # render template output
