@@ -22,12 +22,13 @@ import urllib
 # google calendar client
 import gdata.calendar.client
 
-################################################################################
-
 # right now, just hardcoded
 CALENDAR_URL = ("https://www.google.com/calendar/feeds/adicu.com_"
                 "tud5etmmo5mfmuvdfb54u733i4%40group.calendar.google.com"
                 "/public/full")
+
+################################################################################
+# utils
 
 # rfc3339 is the time/date format gcal uses
 def rfc3339(t):
@@ -79,12 +80,13 @@ def fetch_events(url=CALENDAR_URL, start_time=None, end_time=None):
     # and put it into a sane structure
     events = [{'id': feed.entry[0].id.text.split('/')[-1],
                'title': event.title.text,
-               'datetime': event.when[0].start,
+               'datetime': cfr3339(event.when[0].start),
                'description': event.content.text,
                'location': event.where[0].value,}
               for event in feed.entry]
     return events
 
+################################################################################
 # cherrypy class
 class Flyer():
     # config options
@@ -106,13 +108,16 @@ class Flyer():
         '''
         events = fetch_events()
         # sort of event time
-        events = sorted(events,key=lambda x: time.mktime(cfr3339(x["datetime"])))
+        events = sorted(events, key=lambda x: time.mktime(x['datetime']))
+        for e in events:
+            e['datetime'] = time.strftime('%B %d, %H:%M', e['datetime'])
+
         # grab the front page template from file
         temp = self.env.get_template('front.html')
         return temp.render(events=events)
 
     @cherrypy.expose
-    def event(self, data=''):
+    def event(self, id):
         '''
         Serve up json detailing the event
         '''
@@ -136,18 +141,18 @@ class Flyer():
         return json.dumps()
 
     @cherrypy.expose
-    def template(self, style=None):
+    def flyer(self, id=None, style=None):
         '''
         This displays a template filled with dumb values
         '''
-        # grab the front page template from file
         if style is None:
             style = 'lolhawk.html'
+
         temp = self.env.get_template(style)
         return temp.render(static_path = "")
 
     @cherrypy.expose
-    def flyer(self, tagline="", description="", date="", time="",
+    def render(self, tagline="", description="", date="", time="",
                location="", format=""):
         '''
         Actually render the pdf from the template html
