@@ -13,9 +13,14 @@ ul {
     list-style:none;
 }
 
+ul a {
+    text-decoration:none;
+}
+
 ul li {
     padding:0.5em;
     margin:0.5em;
+    color: black;
     background-color:#CCC;
     border-radius:0.5em;
 }

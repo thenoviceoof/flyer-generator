@@ -107,7 +107,6 @@ class Flyer():
         events = fetch_events()
         # sort of event time
         events = sorted(events,key=lambda x: time.mktime(cfr3339(x["datetime"])))
-        events = [[event, json.dumps(event)] for event in events]
         # grab the front page template from file
         temp = self.env.get_template('front.html')
         return temp.render(events=events)

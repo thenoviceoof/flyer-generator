@@ -2,9 +2,6 @@
 <html>
   <head>
     <link rel="stylesheet" href="/css/front.css" />
-    
-    <script src="/js/jquery-1.4.2.min.js"></script>
-    <script src="/js/front.js"></script>
   </head>
 
   <body>
@@ -12,21 +9,20 @@
 
     <ul>
       {% for event in events: %}
-      <li class="event">
-        <h2>{{ event[0]["title"] }}</h2>
-        <time>
-          Time:
-          <span>{{ event[0]["datetime"] }}</span>
-        </time>
-        <div>Location: <span>{{ event[0]["location"] }}</span></div>
-        <div>Description: <span>{{ event[0]["description"] }}</span></div>
-        <div class="data" style="display:none;">
-          {{ event[1] }}
-        </div>
-      </li>
+      <a href="/flyer/{{ event["id"] }}">
+        <li class="event">
+          <h2>{{ event["title"] }}</h2>
+          <time>
+            Time:
+            <span>{{ event["datetime"] }}</span>
+          </time>
+          <div>Location: <span>{{ event["location"] }}</span></div>
+          <div>Description: <span>{{ event["description"] }}</span></div>
+        </li>
+      </a>
       {% endfor %}
 
-      <a href="/template">
+      <a href="/flyer/">
         <li>
           <h2>Play with an empty template</h2>
         </li>
