@@ -14,6 +14,8 @@ from jinja2 import Environment, FileSystemLoader
 import os
 import subprocess
 import time
+from datetime import datetime
+from datetime import timedelta
 import json
 import urllib
 
@@ -23,7 +25,9 @@ import gdata.calendar.client
 ################################################################################
 
 # right now, just hardcoded
-calendar_url = "https://www.google.com/calendar/feeds/adicu.com_tud5etmmo5mfmuvdfb54u733i4%40group.calendar.google.com/public/full"
+CALENDAR_URL = ("https://www.google.com/calendar/feeds/adicu.com_"
+                "tud5etmmo5mfmuvdfb54u733i4%40group.calendar.google.com"
+                "/public/full")
 
 # rfc3339 is the time/date format gcal uses
 def rfc3339(t):
@@ -46,6 +50,37 @@ def cfr3339(s):
 
 cwd = os.path.dirname(os.path.abspath(__file__))
 
+def fetch_events(url=CALENDAR_URL, start_time=None, end_time=None):
+    '''
+    Init a gdata calendar, get some events from it, and put the events
+    in dicts
+    '''
+    client = gdata.calendar.client.CalendarClient()
+    # but only get upcoming events
+    if not start_time:
+        start_time = time.localtime()
+    start_date = "%d-%02d-%02d" % (start_time[0],start_time[1],start_time[2])
+    # we need to handle getting upcoming days
+    if not end_time:
+        end_time = datetime.now() + timedelta(weeks=2)
+        end_time = end_time.timetuple()
+    end_date = "%d-%02d-%02d" % (end_time[0],end_time[1],end_time[2])
+    # build the calendar event query
+    query = gdata.calendar.client.CalendarEventQuery()
+    query.start_min = start_date
+    query.start_max = end_date
+    # actually get the feed
+    feed = client.get_calendar_event_feed(uri=url, q=query)
+
+    # and put it into a sane structure
+    events = [{'id': feed.entry[0].id.text.split('/')[-1],
+               'title': event.title.text,
+               'datetime': event.when[0].start,
+               'description': event.content.text,
+               'location': event.where[0].value,}
+              for event in feed.entry]
+    return events
+
 # cherrypy class
 class Flyer():
     # config options
@@ -58,31 +93,14 @@ class Flyer():
     def __init__(self):
         # no sense in 
         self.env = Environment(loader = FileSystemLoader('templates'))
-	
+
     @cherrypy.expose
     def index(self):
-        """Grabs google calendar events and displays them, with links to
-        a template pre-populated with the event information"""
-        # grab google calendar events
-        client = gdata.calendar.client.CalendarClient()
-        # but only get upcoming events
-        t = time.localtime()
-        start_date = "%d-%02d-%02d" % (t[0],t[1],t[2])
-        # we need to handle getting upcoming days
-        et = time.localtime(time.mktime((t[0],t[1],t[2]+14, 0,0,0, 0,0,-1)))
-        end_date = "%d-%02d-%02d" % (et[0],et[1],et[2])
-        # build the calendar event query
-        query = gdata.calendar.client.CalendarEventQuery()
-        query.start_min = start_date
-        # actually get the feed
-        feed = client.get_calendar_event_feed(uri=calendar_url, q=query)
-        # and put it into a sane structure
-        events = [{"title":event.title.text,
-                   "datetime": event.when[0].start,
-                   "description": event.content.text,
-                   "location": event.where[0].value,
-                   }
-                  for event in feed.entry]
+        '''
+        Grabs google calendar events and displays them, with links to
+        a template pre-populated with the event information
+        '''
+        events = fetch_events()
         # sort of event time
         events = sorted(events,key=lambda x: time.mktime(cfr3339(x["datetime"])))
         events = [[event, json.dumps(event)] for event in events]
