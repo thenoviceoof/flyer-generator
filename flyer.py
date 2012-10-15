@@ -35,7 +35,10 @@ def rfc3339(t):
 def cfr3339(s):
     """Convert an rfc3339 string to a time struct"""
     # ex: 2011-09-03T22:00:00.000-04:00
-    t = time.mktime(time.strptime(s[0:23], "%Y-%m-%dT%H:%M:%S.000"))
+    try:
+        t = time.mktime(time.strptime(s[0:23], "%Y-%m-%dT%H:%M:%S.000"))
+    except ValueError:
+        t = time.mktime(time.strptime(s[0:23], "%Y-%m-%d"))
     # probably want to ignore this
     #tz = 3600*int(s[23:26])
     #t += tz
