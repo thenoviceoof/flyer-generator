@@ -13,3 +13,6 @@ bin/*
 include/*
 lib/*
 local/*
+
+# rope
+.ropeproject
