@@ -7,3 +7,9 @@
 *.so.*
 wkhtmltopdf
 site.conf
+
+# virtualenv stuff
+bin/*
+include/*
+lib/*
+local/*
